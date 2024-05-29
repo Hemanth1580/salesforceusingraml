@@ -1,0 +1,69 @@
+#%RAML 1.0
+title: Data_Integration
+description: Working on CRUD operations
+mediaType: 
+- application/json
+traits:
+  Error : !include traits/Error.raml
+resourceTypes:
+  header: !include resourceTypes/resourceType.raml
+uses:
+  lib : libraries/library.raml
+/Admin:
+  is : Error
+  get:
+    description : Admin will get all the records
+    displayName : Data Retrieving
+    responses: 
+      200:
+        description : Success response
+        body:
+          application/json:
+            type: string
+            example : "Required data retrived"
+
+  post:
+    description: Data Inserted
+    displayName: Insertion
+    body:
+        type: lib.datatype
+        example: !include examples/example.json
+    responses : 
+      201:
+        description : Success response
+        body:
+          application/json:
+            type: string
+            example : "Success fully inserted"
+
+  put:
+    description: Data Updated
+    displayName: Update
+    body:
+      type: lib.datatype
+      example: !include examples/example.json
+    responses: 
+      200:
+        description : Success response
+        body:
+          application/json:
+            type: string
+            example : "Required data Updated"
+ 
+
+  delete:
+    description: response for delete
+    displayName: Deletion
+    responses:
+      200:
+        description : Success response
+        body:
+          application/json:
+            type: string
+            displayName: Deleted
+            example: "Successfully Deleted"
+
+
+  type: lib.Patch
+
+
