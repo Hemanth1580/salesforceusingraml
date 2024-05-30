@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="salesforceUpdateimplementationSub_Flow" doc:id="24d857aa-cb74-467e-b3f3-9457682f5d18" >
+		<ee:transform doc:name="Transform Message" doc:id="210a73a0-f8df-47d1-9126-c81c01193e33" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload map ((item, index) -> {
+	"Id": item.Id,
+    "Name__c": item.Name__c,
+    "Pho_no__c": item.Pho_no__c,
+    "Email__c": item.Email__c,
+    "Address__c": item.Address__c
+})]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<salesforce:update type="APICentrics__c" doc:name="Update" doc:id="8f36ab7a-d589-4d47-b6be-ed43b986d160" config-ref="Salesforce_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="1c61ff57-c9f0-421a-bf55-a43324ab6afa" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+"Successfully Updated"]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>

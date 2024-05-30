@@ -1,0 +1,15 @@
+#%RAML 1.0 ResourceType
+patch:
+      description: Data update if record is present
+      displayName: Insertion or updation
+    
+      body:
+        type: lib.dataType
+        example: !include ../examples/put.json
+      responses: 
+        200:
+          description : Success response
+          body:
+            application/json:
+              type: string
+              example : "Required data Updated"    
